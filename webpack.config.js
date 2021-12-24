@@ -12,7 +12,8 @@ const config = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.min.js'
+        filename: 'app.min.js',
+        assetModuleFilename: 'dist/images/[hash][ext]'
     },
     devServer: {
         open: true,
@@ -29,6 +30,10 @@ const config = {
     module: {
         rules: [
             {
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
+            {
                 test: /\.(ts|tsx)$/i,
                 loader: 'ts-loader',
                 exclude: ['/node_modules/'],
@@ -43,7 +48,10 @@ const config = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
+                type: 'asset/resource',
+                generator: {
+                    filename: 'static/[hash][ext]'
+                }
             },
 
             // Add your rules for custom modules here
