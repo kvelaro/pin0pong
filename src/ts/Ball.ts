@@ -1,8 +1,10 @@
 import Position from "./interfaces/Position";
 import Speed from "./interfaces/Speed";
 import Size from "./interfaces/Size";
+import Game from "./Game";
+import GameObject from "./interfaces/GameObject";
 
-export default class Ball {
+export default class Ball implements GameObject{
     private ctx: CanvasRenderingContext2D
     private gameWidth: number
     private gameHeight: number
@@ -10,10 +12,10 @@ export default class Ball {
     private size: Size
     private position: Position
     private speed: Speed
-    constructor(ctx: CanvasRenderingContext2D, gameWidth:number, gameHeight:number) {
-        this.ctx = ctx
-        this.gameWidth = gameWidth
-        this.gameHeight = gameHeight
+    constructor(gameObject: Game) {
+        this.ctx = gameObject.context()
+        this.gameWidth = gameObject.width()
+        this.gameHeight = gameObject.height()
         this.image = <CanvasImageSource>document.getElementById('ball')
         this.size = { width: 20, height: 20 }
         this.position  = { x: 10, y: 10 }

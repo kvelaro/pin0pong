@@ -1,6 +1,8 @@
 import Position from "./interfaces/Position";
+import Game from "./Game";
+import GameObject from "./interfaces/GameObject";
 
-export default class Paddle {
+export default class Paddle implements GameObject {
     private readonly ctx: CanvasRenderingContext2D
     private readonly width: number
     private readonly height: number
@@ -11,16 +13,16 @@ export default class Paddle {
     private gameHeight: number
     private position: Position
 
-    constructor(ctx: CanvasRenderingContext2D, gameWidth:number, gameHeight:number) {
-        this.ctx = ctx
+    constructor(gameObj: Game) {
+        this.ctx = gameObj.context()
         this.width = 150
         this.height = 30
-        this.gameWidth = gameWidth
-        this.gameHeight = gameHeight
+        this.gameWidth = gameObj.width()
+        this.gameHeight = gameObj.height()
 
         this.position = {
-            x: gameWidth / 2 - this.width / 2,
-            y: gameHeight - (this.height + 10)
+            x: this.gameWidth / 2 - this.width / 2,
+            y: this.gameHeight - (this.height + 10)
         }
     }
 
