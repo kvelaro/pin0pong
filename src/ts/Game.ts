@@ -1,15 +1,15 @@
+import GameObject from "./interfaces/GameObject";
 import Paddle from "./Paddle";
 import Ball from "./Ball";
 import Input from "./Input";
-import GameObject from "./interfaces/GameObject";
 
 export default class Game {
     private readonly ctx: CanvasRenderingContext2D
     private gameWidth: number
     private gameHeight: number
     private gameObjects: Array<GameObject>
-    private ball: Ball
-    private paddle: Paddle
+    public ball: Ball
+    public paddle: Paddle
 
     constructor(ctx: CanvasRenderingContext2D, gameWidth:number, gameHeight: number) {
         this.ctx = ctx
@@ -34,8 +34,8 @@ export default class Game {
         this.ball = new Ball(this)
 
         this.gameObjects = [
-            this.ball,
-            this.paddle
+            this.paddle,
+            this.ball
         ]
 
         let input = new Input(this.paddle)
