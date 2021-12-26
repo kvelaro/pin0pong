@@ -2,7 +2,7 @@ import GameObject from "./interfaces/GameObject";
 import Paddle from "./Paddle";
 import Ball from "./Ball";
 import Input from "./Input";
-import Brick from "./Brick";
+import Level from "./Level";
 
 export default class Game {
     private readonly ctx: CanvasRenderingContext2D
@@ -11,6 +11,7 @@ export default class Game {
     private gameObjects: Array<GameObject>
     public ball: Ball
     public paddle: Paddle
+    public delete: Boolean
 
     constructor(ctx: CanvasRenderingContext2D, gameWidth:number, gameHeight: number) {
         this.ctx = ctx
@@ -34,16 +35,12 @@ export default class Game {
         this.paddle = new Paddle(this)
         this.ball = new Ball(this)
 
-        let bricks = []
-        for(let i = 0; i < 16; i++) {
-            let brick = new Brick(this, {x: i * 52, y: 30})
-            bricks.push(brick)
-        }
+        let level = new Level(this)
 
         this.gameObjects = [
             this.paddle,
             this.ball,
-            ...bricks
+            ...level.buildLevel(1)
         ]
 
         let input = new Input(this.paddle)
@@ -51,6 +48,7 @@ export default class Game {
 
     public update(deltaTime: number) {
         this.gameObjects.forEach((object) => object.update(deltaTime))
+        this.gameObjects = this.gameObjects.filter((object) => { return !object.delete})
     }
 
     public draw() {

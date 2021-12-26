@@ -3,19 +3,21 @@ import Speed from "./interfaces/Speed";
 import Size from "./interfaces/Size";
 import Game from "./Game";
 import GameObject from "./interfaces/GameObject";
+import {CollisionDetection} from "./CollisionDetection";
 
 export default class Ball implements GameObject{
     private game: Game
     private image: CanvasImageSource
-    private size: Size
-    private position: Position
-    private speed: Speed
+    public size: Size
+    public position: Position
+    public speed: Speed
+    public delete: Boolean
     constructor(game: Game) {
         this.game = game
         this.image = <CanvasImageSource>document.getElementById('ball')
         this.size = { width: 20, height: 20 }
         this.position  = { x: 10, y: 10 }
-        this.speed = { x: 2, y: 2 }
+        this.speed = { x: 5, y: 5 }
     }
 
     draw() {
@@ -34,16 +36,7 @@ export default class Ball implements GameObject{
             this.speed.y = -this.speed.y
         }
 
-        let bottomOfBall = this.position.y + this.size.height
-        let topOfPaddle = this.game.paddle.position.y
-        let leftSideOfPaddle = this.game.paddle.position.x
-        let rightSideOfPaddle = this.game.paddle.position.x + this.game.paddle.size.width
-
-        if(
-            bottomOfBall >= topOfPaddle &&
-            this.position.x >= leftSideOfPaddle &&
-            this.position.x + this.size.width <= rightSideOfPaddle
-        ) {
+        if(CollisionDetection(this, this.game.paddle)) {
             this.speed.y = -this.speed.y
         }
     }

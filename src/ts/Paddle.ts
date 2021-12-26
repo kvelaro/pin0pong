@@ -12,6 +12,7 @@ export default class Paddle implements GameObject {
     private gameHeight: number
     public position: Position
     public size: Size
+    public delete: Boolean
 
     constructor(gameObj: Game) {
         this.ctx = gameObj.context()
