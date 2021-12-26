@@ -36,6 +36,10 @@ export default class Ball implements GameObject{
             this.speed.y = -this.speed.y
         }
 
+        if(this.position.y + this.size.height > this.game.height()) {
+            this.game.live.remain--
+        }
+
         if(CollisionDetection(this, this.game.paddle)) {
             this.speed.y = -this.speed.y
         }

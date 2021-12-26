@@ -63,6 +63,9 @@ export default class Game {
             this.gameObjects.forEach((object) => object.update(deltaTime))
             this.gameObjects = this.gameObjects.filter((object) => { return !object.delete})
         }
+        if(this.live.remain == 0) {
+            this.gameState = GAMESTATE.GAMEOVER
+        }
     }
 
     public draw() {
