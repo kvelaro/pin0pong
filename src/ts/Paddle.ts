@@ -7,7 +7,7 @@ export default class Paddle implements GameObject {
     private readonly ctx: CanvasRenderingContext2D
     private color: string = '#0f0'
     private speed: number = 0
-    private maxSpeed: number = 70
+    private maxSpeed: number = 200
     private gameWidth: number
     private gameHeight: number
     public position: Position
