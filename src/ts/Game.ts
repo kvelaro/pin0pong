@@ -4,6 +4,13 @@ import Ball from "./Ball";
 import Input from "./Input";
 import Level from "./Level";
 
+const GAMESTATE = {
+    PAUSED: 0,
+    RUNNING: 1,
+    MENU: 2,
+    GAMEOVER: 3
+}
+
 export default class Game {
     private readonly ctx: CanvasRenderingContext2D
     private gameWidth: number
@@ -12,6 +19,7 @@ export default class Game {
     public ball: Ball
     public paddle: Paddle
     public delete: Boolean
+    public gameState: number
 
     constructor(ctx: CanvasRenderingContext2D, gameWidth:number, gameHeight: number) {
         this.ctx = ctx
@@ -32,6 +40,7 @@ export default class Game {
     }
 
     public start() {
+        this.gameState = GAMESTATE.RUNNING
         this.paddle = new Paddle(this)
         this.ball = new Ball(this)
 
@@ -43,15 +52,26 @@ export default class Game {
             ...level.buildLevel(1)
         ]
 
-        let input = new Input(this.paddle)
+        let input = new Input(this)
     }
 
     public update(deltaTime: number) {
-        this.gameObjects.forEach((object) => object.update(deltaTime))
-        this.gameObjects = this.gameObjects.filter((object) => { return !object.delete})
+        if(this.gameState == GAMESTATE.RUNNING) {
+            this.gameObjects.forEach((object) => object.update(deltaTime))
+            this.gameObjects = this.gameObjects.filter((object) => { return !object.delete})
+        }
     }
 
     public draw() {
         this.gameObjects.forEach((object) => object.draw())
+    }
+
+    public toggle() {
+        if(this.gameState == GAMESTATE.RUNNING) {
+            this.gameState = GAMESTATE.PAUSED
+        }
+        else {
+            this.gameState = GAMESTATE.RUNNING
+        }
     }
 }

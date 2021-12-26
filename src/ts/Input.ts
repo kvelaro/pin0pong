@@ -1,14 +1,18 @@
-import Paddle from "./Paddle"
+import Game from "./Game";
 
 export default class Input {
-    constructor(paddle: Paddle) {
+
+    constructor(game: Game) {
         document.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowLeft':
-                    paddle.moveLeft()
+                    game.paddle.moveLeft()
                     break;
                 case 'ArrowRight':
-                    paddle.moveRight()
+                    game.paddle.moveRight()
+                    break;
+                case 'Escape':
+                    game.toggle()
                     break;
             }
         })
@@ -16,10 +20,10 @@ export default class Input {
         document.addEventListener('keyup', (event) => {
             switch (event.key) {
                 case 'ArrowLeft':
-                    paddle.stop()
+                    game.paddle.stop()
                     break;
                 case 'ArrowRight':
-                    paddle.stop()
+                    game.paddle.stop()
                     break;
             }
         })
