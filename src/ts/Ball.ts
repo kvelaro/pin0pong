@@ -42,7 +42,7 @@ export default class Ball implements GameObject{
         if(
             bottomOfBall >= topOfPaddle &&
             this.position.x >= leftSideOfPaddle &&
-            this.position.x <= rightSideOfPaddle
+            this.position.x + this.size.width <= rightSideOfPaddle
         ) {
             this.speed.y = -this.speed.y
         }

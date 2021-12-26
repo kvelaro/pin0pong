@@ -2,6 +2,7 @@ import GameObject from "./interfaces/GameObject";
 import Paddle from "./Paddle";
 import Ball from "./Ball";
 import Input from "./Input";
+import Brick from "./Brick";
 
 export default class Game {
     private readonly ctx: CanvasRenderingContext2D
@@ -33,9 +34,16 @@ export default class Game {
         this.paddle = new Paddle(this)
         this.ball = new Ball(this)
 
+        let bricks = []
+        for(let i = 0; i < 16; i++) {
+            let brick = new Brick(this, {x: i * 52, y: 30})
+            bricks.push(brick)
+        }
+
         this.gameObjects = [
             this.paddle,
-            this.ball
+            this.ball,
+            ...bricks
         ]
 
         let input = new Input(this.paddle)
