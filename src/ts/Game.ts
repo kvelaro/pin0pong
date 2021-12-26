@@ -3,6 +3,7 @@ import Paddle from "./Paddle";
 import Ball from "./Ball";
 import Input from "./Input";
 import Level from "./Level";
+import Live from "./Live";
 
 const GAMESTATE = {
     PAUSED: 0,
@@ -18,6 +19,7 @@ export default class Game {
     private gameObjects: Array<GameObject>
     public ball: Ball
     public paddle: Paddle
+    public live: Live
     public delete: Boolean
     public gameState: number
 
@@ -43,12 +45,13 @@ export default class Game {
         this.gameState = GAMESTATE.RUNNING
         this.paddle = new Paddle(this)
         this.ball = new Ball(this)
-
+        this.live = new Live(this)
         let level = new Level(this)
 
         this.gameObjects = [
             this.paddle,
             this.ball,
+            this.live,
             ...level.buildLevel(1)
         ]
 
